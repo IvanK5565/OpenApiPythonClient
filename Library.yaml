@@ -1,0 +1,169 @@
+openapi: 3.0.0
+info:
+  title: Library System API
+  version: 1.0.0
+  description: API для управління книгами та авторами в бібліотеці.
+paths:
+  /books:
+    get:
+      summary: Отримати список усіх книг
+      responses:
+        '200':
+          description: Успішно отримано список книг
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Book'
+    post:
+      summary: Створити нову книгу
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Book'
+      responses:
+        '201':
+          description: Книга успішно створена
+  /books/{id}:
+    get:
+      summary: Отримати деталі конкретної книги
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Успішно отримано деталі книги
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+    put:
+      summary: Оновити інформацію про книгу
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Book'
+      responses:
+        '200':
+          description: Інформація про книгу успішно оновлена
+    delete:
+      summary: Видалити книгу
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Книга успішно видалена
+  /authors:
+    get:
+      summary: Отримати список усіх авторів
+      responses:
+        '200':
+          description: Успішно отримано список авторів
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Author'
+    post:
+      summary: Створити нового автора
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Author'
+      responses:
+        '201':
+          description: Автор успішно створений
+  /authors/{id}:
+    get:
+      summary: Отримати деталі конкретного автора
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Успішно отримано деталі автора
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Author'
+    put:
+      summary: Оновити інформацію про автора
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Author'
+      responses:
+        '200':
+          description: Інформація про автора успішно оновлена
+    delete:
+      summary: Видалити автора
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Автор успішно видалений
+components:
+  schemas:
+    Book:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        authorId:
+          type: integer
+        publishedDate:
+          type: string
+          format: date
+      required:
+        - title
+        - authorId
+    Author:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        birthDate:
+          type: string
+          format: date
+      required:
+        - name
